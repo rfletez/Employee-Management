@@ -11,6 +11,3 @@ public class BackEndApplication {
 	} 
 
 }
-
-//Hello: First Commit
-//Hello: 10/28/22-> Second Commit for today
