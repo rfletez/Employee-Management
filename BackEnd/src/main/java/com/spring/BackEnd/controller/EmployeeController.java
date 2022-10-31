@@ -22,5 +22,11 @@ public class EmployeeController {
 	public List<Employee> getAllEmployees() {
 		return employeeRepo.findAll();
 	}
+	
+	//get a certain employee
+	
+	//delete an employee
+	
+	//update an employee
 
 }
