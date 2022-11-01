@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import EmployeeService from '../services/EmployeeService';
 
 export default class CreateEmployee extends Component {
     constructor(props) {
@@ -9,10 +10,36 @@ export default class CreateEmployee extends Component {
             lastName: '',
             emailId: ''
         }
+
+        this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
+        this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+        this.changeEmailIDHandler = this.changeEmailIDHandler.bind(this);
+        this.saveEmployee = this.saveEmployee.bind(this);
     }
 
     changeFirstNameHandler = (event) => {
         this.setState({ firstName: event.target.value });
+    }
+
+    changeLastNameHandler = (event) => {
+        this.setState({ lastName: event.target.value });
+    }
+
+    changeEmailIDHandler = (event) => {
+        this.setState({ emailId: event.target.value });
+    }
+
+    saveEmployee = (event) => {
+        event.preventDefault();
+        let employee = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
+
+        EmployeeService.createEmployee(employee).then((response) => {
+            this.props.history.push('/employees');
+        });
+    }
+
+    cancel() {
+        this.props.history('/employees');
     }
 
     render() {
@@ -26,7 +53,7 @@ export default class CreateEmployee extends Component {
                         <div className='card-body'>
                             <form>
                                 <div className='form-group'>
-                                    <label>Forst Name: </label>
+                                    <label>First Name: </label>
                                     <input 
                                         placeholder='First Name'
                                         name='firstName'
@@ -34,11 +61,33 @@ export default class CreateEmployee extends Component {
                                         value={this.state.firstName}
                                         onChange={this.changeFirstNameHandler}
                                     />
-
-                                    <br/>
-
-
                                 </div>
+
+                                <div className='form-group'>
+                                    <label>Last Name: </label>
+                                    <input 
+                                        placeholder='Last Name'
+                                        name='lastName'
+                                        className='form-control'
+                                        value={this.state.lastName}
+                                        onChange={this.changeLastNameHandler}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>Email Address: </label>
+                                    <input 
+                                        placeholder='Email Address'
+                                        name='emailId'
+                                        className='form-control'
+                                        value={this.state.emailId}
+                                        onChange={this.changeEmailIDHandler}
+                                    />
+                                </div>
+
+                                <button className='btn btn-success' onClick={this.saveEmployee}>Save</button>
+                                <button className='btn btn-danger' onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
+
                             </form>
                         </div>
                     </div>
